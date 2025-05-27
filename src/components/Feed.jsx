@@ -1,7 +1,31 @@
-import React from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { BASE_URL } from "../utils/constants";
+import UserCard from "./UserCard";
 
 const Feed = () => {
-  return <div>Feed</div>;
+  const [feed, setFeed] = useState(null);
+  const getFeed = async () => {
+    try {
+      const res = await axios.get(BASE_URL + "/feed", {
+        withCredentials: true,
+      });
+      setFeed(res.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getFeed();
+  });
+  return (
+    feed && (
+      <div>
+        <UserCard feedData={feed}></UserCard>
+      </div>
+    )
+  );
 };
 
 export default Feed;
