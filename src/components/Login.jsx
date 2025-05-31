@@ -32,32 +32,45 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center my-32">
-      <div className="card bg-base-300 w-96 shadow-sm">
+    <div className="flex justify-center items-center min-h-screen bg-base-200">
+      <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
-          <h2 className="card-title">Login</h2>
-          <div className="my-3 flex flex-col space-y-4">
+          <h2 className="card-title justify-center text-2xl">Login</h2>
+          <form className="form-control space-y-4">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
             <input
-              type="text"
-              placeholder="UserName"
-              className="input rounded-l"
+              type="email"
+              placeholder="Enter your email"
+              className="input input-bordered"
               value={emailId}
               onChange={(e) => setEmailId(e.target.value)}
             />
+
+            <label className="label">
+              <span className="label-text">Password</span>
+            </label>
             <input
-              type="text"
-              placeholder="Password"
-              className="input rounded-l"
+              type="password"
+              placeholder="Enter your password"
+              className="input input-bordered"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-          </div>
-          <p className="text-red-500"> {error && `ERROR :  ${error}`}</p>
-          <div className="card-actions justify-center">
-            <button className="btn btn-primary" onClick={handleLogin}>
-              Login
-            </button>
-          </div>
+
+            {error && <p className="text-red-500">ERROR: {error}</p>}
+
+            <div className="card-actions justify-center mt-4">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleLogin}
+              >
+                Login
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

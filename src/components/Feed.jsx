@@ -18,13 +18,16 @@ const Feed = () => {
 
   useEffect(() => {
     getFeed();
-  });
+  }, []);
   return (
-    feed && (
-      <div>
-        <UserCard feedData={feed}></UserCard>
-      </div>
-    )
+    feed &&
+    feed.map((item) => {
+      return (
+        <div key={item._id}>
+          <UserCard userData={item}></UserCard>;
+        </div>
+      );
+    })
   );
 };
 
