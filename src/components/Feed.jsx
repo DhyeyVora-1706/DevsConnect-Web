@@ -16,15 +16,21 @@ const Feed = () => {
     }
   };
 
+  const removeUserFromFeed = (userId) => {
+    const updatedFeed = feed.filter((user) => user._id !== userId);
+    setFeed(updatedFeed);
+  };
+
   useEffect(() => {
     getFeed();
   }, []);
+
   return (
     feed &&
     feed.map((item) => {
       return (
         <div key={item._id}>
-          <UserCard userData={item}></UserCard>;
+          <UserCard userData={item} updateFeed={removeUserFromFeed}></UserCard>;
         </div>
       );
     })

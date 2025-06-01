@@ -4,6 +4,25 @@ import { BASE_URL } from "../utils/constants";
 
 const Requests = () => {
   const [requestsData, setRequestsData] = useState(null);
+
+  const reviewRequest = async (status, requestId) => {
+    try {
+      await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + requestId,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      const filteredRequests = requestsData.filter(
+        (request) => request._id !== requestId
+      );
+      setRequestsData(filteredRequests);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const getRequests = async () => {
     try {
       const res = await axios.get(BASE_URL + "/user/requests/received", {
@@ -24,7 +43,11 @@ const Requests = () => {
   }
 
   if (requestsData.length === 0) {
-    return <h1>You don't have any pending requests</h1>;
+    return (
+      <div className="flex justify-center text-2xl my-10">
+        <h1>You don't have any pending requests😊</h1>
+      </div>
+    );
   }
 
   return (
@@ -55,8 +78,18 @@ const Requests = () => {
 
             {/* Button Section */}
             <div className="ml-auto flex">
-              <button className="btn btn-primary mx-2">Accept</button>
-              <button className="btn btn-secondary mx-2">Reject</button>
+              <button
+                className="btn btn-primary mx-2"
+                onClick={() => reviewRequest("accepted", item._id)}
+              >
+                Accept
+              </button>
+              <button
+                className="btn btn-secondary mx-2"
+                onClick={() => reviewRequest("rejected", item._id)}
+              >
+                Reject
+              </button>
             </div>
           </div>
         );
