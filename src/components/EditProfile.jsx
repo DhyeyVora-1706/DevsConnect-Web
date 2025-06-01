@@ -10,7 +10,7 @@ const EditProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [age, setAge] = useState(user.age ? user.age : 18);
-  const [gender, setGender] = useState(user.gender);
+  const [gender, setGender] = useState(user.gender ? user.gender : "male");
   const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
   const [about, setAbout] = useState(user.about);
   const [showToast, setShowToast] = useState(false);
@@ -19,6 +19,7 @@ const EditProfile = ({ user }) => {
 
   const updateProfile = async () => {
     setError("");
+    console.log(gender);
     try {
       const res = await axios.patch(
         BASE_URL + "/profile/edit",
