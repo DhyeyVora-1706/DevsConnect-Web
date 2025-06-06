@@ -13,9 +13,13 @@ const EditProfile = ({ user }) => {
   const [gender, setGender] = useState(user.gender ? user.gender : "male");
   const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
   const [about, setAbout] = useState(user.about);
+  const [skills, setSkills] = useState(user.skills);
   const [showToast, setShowToast] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+
+  const skillsList = skills.map((skill) => skill).join(",");
+  console.log(skillsList);
 
   const updateProfile = async () => {
     setError("");
@@ -23,7 +27,7 @@ const EditProfile = ({ user }) => {
     try {
       const res = await axios.patch(
         BASE_URL + "/profile/edit",
-        { firstName, lastName, age, gender, about, photoUrl },
+        { firstName, lastName, age, gender, about, photoUrl, skills },
         { withCredentials: true }
       );
       dispatch(addUserInfo(res?.data?.data));
@@ -129,6 +133,19 @@ const EditProfile = ({ user }) => {
               value={about}
               onChange={(e) => setAbout(e.target.value)}
             ></textarea>
+
+            <label className="label">
+              <span className="label-text">Skills</span>
+            </label>
+            <textarea
+              className="textarea textarea-bordered"
+              placeholder="Skills"
+              value={skillsList}
+              onChange={(e) => {
+                const editedSkills = e.target.value.split(",");
+                setSkills(editedSkills);
+              }}
+            ></textarea>
             <p className="text-red-500">{error}</p>
             <div className="card-actions justify-center mt-4">
               <button
@@ -145,7 +162,9 @@ const EditProfile = ({ user }) => {
 
       {/* User Card - Side by side */}
       <UserCard
-        userData={{ firstName, lastName, age, gender, about, photoUrl }}
+        userData={{ firstName, lastName, age, gender, about, photoUrl, skills }}
+        isStatic={true}
+        disableActions={true}
       />
       {showToast && (
         <div className="toast toast-top toast-center">

@@ -2,12 +2,12 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUserInfo } from "../utils/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
-  const [emailId, setEmailId] = useState("mark@gmail.com");
-  const [password, setPassword] = useState("testing");
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -71,6 +71,15 @@ const Login = () => {
               </button>
             </div>
           </form>
+          <div className="text-center mt-6 text-sm text-gray-500">
+            New user?{" "}
+            <Link
+              to="/signup"
+              className="text-blue-500 hover:underline font-medium"
+            >
+              Sign Up
+            </Link>
+          </div>
         </div>
       </div>
     </div>

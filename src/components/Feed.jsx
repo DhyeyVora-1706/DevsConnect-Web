@@ -25,16 +25,39 @@ const Feed = () => {
     getFeed();
   }, []);
 
+  if (!feed) return;
+
+  if (feed.length <= 0) {
+    return (
+      <div className="flex justify-center text-2xl my-10">
+        <h1>You are all caught up , No more users left😊</h1>
+      </div>
+    );
+  }
+
   return (
-    feed &&
-    feed.map((item) => {
-      return (
-        <div key={item._id}>
-          <UserCard userData={item} updateFeed={removeUserFromFeed}></UserCard>;
-        </div>
-      );
-    })
+    <div className="relative w-full h-[500px]">
+      {feed &&
+        feed.map((item, index) => (
+          <UserCard
+            key={item._id}
+            userData={item}
+            updateFeed={removeUserFromFeed}
+            index={index}
+          />
+        ))}
+    </div>
   );
+  // return (
+  //   feed &&
+  //   feed.map((item) => {
+  //     return (
+  //       <div key={item._id}>
+  //         <UserCard userData={item} updateFeed={removeUserFromFeed}></UserCard>;
+  //       </div>
+  //     );
+  //   })
+  // );
 };
 
 export default Feed;
